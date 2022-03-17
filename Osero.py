@@ -513,18 +513,18 @@ def render(gamemap,turn):
                 red_cnt += 1
             elif gamemap[i][j] == 2:
                 blue_cnt += 1
-    print(f"{Color.BG_RED}  {Color.BG_DEFAULT}:{red_cnt}  {Color.BG_BLUE}  {Color.BG_DEFAULT}:{blue_cnt}"  )
+    print(f"{Color.WHITE}{Color.BG_RED}  {Color.BG_DEFAULT}:{red_cnt}  {Color.BG_BLUE}  {Color.BG_DEFAULT}:{blue_cnt}"  )
     if turn == 1:
         print(f"TURN : PLAYER 1 {Color.BG_RED}  {Color.BG_DEFAULT}")
     else:
         print(f"TURN : PLAYER 2 {Color.BG_BLUE}  {Color.BG_DEFAULT}")
     render_cache = ""
-    render_cache = f"{Color.BG_WHITE}  "
+    render_cache = f"{Color.BG_WHITE}{Color.BLACK}  "
     for i in range(len(game_map)):
          render_cache +=f"{i} ";
     print(render_cache+f"x {Color.BG_DEFAULT}")
     for i in range(len(game_map)):
-        render_cache =f"{Color.BG_WHITE} {i}"
+        render_cache =f"{Color.BG_WHITE}{Color.BLACK} {i}{Color.WHITE}"
         if mx_y > 10 and i < 10:
             render_cache +=" "
         for j in range(len(game_map[i])):
@@ -621,8 +621,11 @@ while game_status == Status.Fighting:
         print(f"you cant put stone here ({select_x},{select_y})")
     game_last_turn_status = 0 
     if game_status == Status.Fighting:
-        select_y = int(input("x > "))
-        select_x = int(input("y > "))
+        try:
+            select_y = int(input("x > "))
+            select_x = int(input("y > "))
+        except ValueError:
+            continue
         #can put? 
         check_status = canPut(game_map , select_x, select_y,game_turn)
         if check_status != 0 :
