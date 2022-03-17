@@ -174,8 +174,7 @@ def look_right_down(gamemap ,x ,y):
 def look_left_up(gamemap , x ,y):
     res = list(range(wmin(x+1,y+1)))
     for i in range(len(res)):
-        res[i] = gamemap[i-1][len(gamemap[i])-1 -i]
-    res.reverse()
+        res[i] = gamemap[x-i][y-i]
     #print(f"x : {x} y : {y} look_left_up() : {res}")
     return res
 def look_right_up(gamemap , x, y):#gamemap[y][x]
@@ -185,9 +184,7 @@ def look_right_up(gamemap , x, y):#gamemap[y][x]
             break
         if i+y >= len(gamemap[0]):
             break;
-        res[i] = gamemap[x-i][y+i]
-    
-    #print(f"x:{y} y:{x} len:{len(res)} res:{res}")
+        res[i] = gamemap[x-i][y+i]    
     return res
 
 def changeStones(gamemap,x,y,turn):
@@ -248,123 +245,143 @@ def changeStones(gamemap,x,y,turn):
                         continue 
         nx = x
         x = y
-        y = nx       
-        print(f"changeStone(x:{x},y:{y}) : ")
-
+        y = nx   
+        dtg_res = ""
+        #print(f"changeStone(x:{x},y:{y}) : ")
+        for i in range(len(Direction_to_go)):
+            if Direction_to_go[i] ==True:
+                if i==Direction.UP:
+                    dtg_res +="up,"
+                if i==Direction.DOWN:
+                    dtg_res+="down,"
+                if i==Direction.RIGHT:
+                    dtg_res+="right,"
+                if i==Direction.LEFT:
+                    dtg_res+="left,"
+                if i==Direction.RIGHT_UP:
+                    dtg_res+="rigth_up,"
+                if i==Direction.RIGHT_DOWN:
+                    dtg_res +="right_down"
+                if i==Direction.LEFT_UP:
+                    dtg_res +="left_up"
+                if i==Direction.LEFT_DOWN:
+                    dtg_res+="left_down"
+        print(dtg_res)
+        
         if turn == 1:
             for i in range(len(Direction_to_go)):
                 if Direction_to_go[i] == True:
                     if i == Direction.UP :
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y-j])
+                            #print(nextGameMap[x][y-j])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x] == CellType.Player2:
-                                print("replace")
+                                #print("replace")
                                 nextGameMap[y-j][x] = CellType.Player1
                                 continue
                             if nextGameMap[y-j][x] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.DOWN :
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-2):
-                            print(nextGameMap[x][y+j])
+                            #print(nextGameMap[x][y+j])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x] = CellType.Player1
                                 continue
                             if nextGameMap[y+j][x] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT:#←
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y][x+j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y][x+j] = CellType.Player1
                                 continue
                             if nextGameMap[y][x+j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT:
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-2):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y][x-j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y][x-j] = CellType.Player1
                                 continue
                             if nextGameMap[y][x-j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT_UP:
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x+j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y-j][x+j] = CellType.Player1
                                 continue
                             if nextGameMap[y-j][x+j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT_DOWN:
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x+j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x+j] = CellType.Player1
                                 continue
                             if nextGameMap[y+j][x+j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT_DOWN:
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x-j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x-j] = CellType.Player1
                                 continue
                             if nextGameMap[y+j][x-j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT_UP:
                         nextGameMap[y][x] = CellType.Player1
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x-j] == CellType.Player2:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y-j][x-j] = CellType.Player1
                                 continue
                             if nextGameMap[y-j][x-j] == CellType.Player1:
-                                print("end")
+                                #print("end")
                                 break;
         elif turn ==2:
             for i in range(len(Direction_to_go)):
@@ -372,114 +389,114 @@ def changeStones(gamemap,x,y,turn):
                     if i == Direction.UP :
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y-j])
+                            #print(nextGameMap[x][y-j])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x] == CellType.Player1:
-                                print("replace")
+                                #print("replace")
                                 nextGameMap[y-j][x] = CellType.Player2
                                 continue
                             if nextGameMap[y-j][x] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.DOWN :
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-2):
-                            print(nextGameMap[x][y+j])
+                            #print(nextGameMap[x][y+j])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x] = CellType.Player2
                                 continue
                             if nextGameMap[y+j][x] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT:#←
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y][x+j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y][x+j] = CellType.Player2
                                 continue
                             if nextGameMap[y][x+j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT:
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-2):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y][x-j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y][x-j] = CellType.Player2
                                 continue
                             if nextGameMap[y][x-j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT_UP:
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x+j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y-j][x+j] = CellType.Player2
                                 continue
                             if nextGameMap[y-j][x+j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.RIGHT_DOWN:
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x+j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x+j] = CellType.Player2
                                 continue
                             if nextGameMap[y+j][x+j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT_DOWN:
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y+j][x-j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y+j][x-j] = CellType.Player2
                                 continue
                             if nextGameMap[y+j][x-j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
                     if i == Direction.LEFT_UP:
                         nextGameMap[y][x] = CellType.Player2
                         for j in range(len(arounds[i])-1):
-                            print(nextGameMap[x][y])
+                            #print(nextGameMap[x][y])
                             if j == 0 :
-                                print("continue")
+                                #print("continue")
                                 continue
                             if nextGameMap[y-j][x-j] == CellType.Player1:
-                                print("replace!")
+                                #print("replace!")
                                 nextGameMap[y-j][x-j] = CellType.Player2
                                 continue
                             if nextGameMap[y-j][x-j] == CellType.Player2:
-                                print("end")
+                                #print("end")
                                 break;
         return nextGameMap
                             
